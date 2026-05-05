@@ -1,0 +1,26 @@
+{
+  "name": "@org/action-engine-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "services/action-engine/api",
+  "targets": {
+    "install": {
+      "command": "npm install",
+      "options": {
+        "cwd": "services/action-engine/api"
+      }
+    },
+    "serve": {
+      "command": "node draft-api.mjs",
+      "options": {
+        "cwd": "services/action-engine/api"
+      }
+    },
+    "draft": {
+      "command": "node draft-pattern.mjs",
+      "options": {
+        "cwd": "services/action-engine/api"
+      }
+    }
+  }
+}
