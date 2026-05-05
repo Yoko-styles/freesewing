@@ -1,0 +1,21 @@
+{
+  "name": "@org/action-engine-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node draft-api.mjs"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "@freesewing/aaron": "next",
+    "@freesewing/albert": "next",
+    "@freesewing/yuri": "next",
+    "@freesewing/models": "next",
+    "@freesewing/plugin-theme": "next",
+    "@freesewing/plugin-i18n": "next",
+    "@freesewing/config": "next"
+  }
+}
