@@ -1,0 +1,1093 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-05-07",
+  "source": "FreeSewing design library",
+  "categories": {
+    "garment_types": ["tops", "bottoms", "coats", "underwear", "swimwear", "one-piece", "accessories", "toys", "costumes", "historical", "block", "utility"],
+    "subtypes": {
+      "tops": ["tank-top", "t-shirt", "button-down-shirt", "hoodie", "sweatshirt", "sweater", "draped-top", "fitted-top", "swim-shirt", "waistcoat", "tunic", "zero-waste-top"],
+      "bottoms": ["trousers", "chinos", "breeches", "leggings", "wrap-pants", "skirt", "swim-trunks"],
+      "coats": ["long-coat", "jacket", "sport-coat", "cloak"],
+      "underwear": ["tank-top", "boxer-briefs", "underpants", "corset", "shift"],
+      "swimwear": ["bikini-top", "swim-shirt", "swim-trunks", "one-piece"],
+      "one-piece": ["one-piece", "overalls", "romper"],
+      "accessories": ["apron", "bow-tie", "bib", "face-mask", "hat", "bag", "pocket", "tie", "tabard"],
+      "toys": ["plush-toy"],
+      "costumes": ["ghost-costume"],
+      "block": ["body-block-mens", "body-block-womens", "body-block-knit", "bodice-block", "trouser-block"]
+    }
+  },
+  "designs": {
+    "aaron": {
+      "id": "aaron",
+      "name": "Aaron A-shirt",
+      "garment_type": "tops",
+      "subtype": "tank-top",
+      "attributes": {
+        "sleeves": "none",
+        "neckline": "scoop",
+        "fit": "relaxed",
+        "fabric_type": "knit",
+        "closure": "none"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["tops", "underwear"],
+      "techniques": ["hem", "stretch", "knit-binding", "curved-seam"],
+      "also_suitable_as": ["undershirt", "workout-top"]
+    },
+    "albert": {
+      "id": "albert",
+      "name": "Albert apron",
+      "garment_type": "accessories",
+      "subtype": "apron",
+      "attributes": {
+        "sleeves": "none",
+        "fit": "loose",
+        "closure": "tie",
+        "has_pocket": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["accessories"],
+      "techniques": ["hem", "knit-binding", "curved-seam", "pocket"]
+    },
+    "bee": {
+      "id": "bee",
+      "name": "Bee bikini top",
+      "garment_type": "swimwear",
+      "subtype": "bikini-top",
+      "attributes": {
+        "sleeves": "none",
+        "fit": "fitted",
+        "fabric_type": "stretch",
+        "closure": "tie"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["tops", "swimwear"],
+      "techniques": ["hem", "stretch", "curved-seam", "precision"]
+    },
+    "bella": {
+      "id": "bella",
+      "name": "Bella body block",
+      "garment_type": "block",
+      "subtype": "bodice-block",
+      "attributes": {
+        "fit": "fitted",
+        "has_dart": true,
+        "gender_cut": "womenswear"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["blocks", "tops"],
+      "techniques": ["dart", "block"],
+      "notes": "Womenswear bodice foundation block"
+    },
+    "benjamin": {
+      "id": "benjamin",
+      "name": "Benjamin bow tie",
+      "garment_type": "accessories",
+      "subtype": "bow-tie",
+      "attributes": {
+        "has_interfacing": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["accessories"],
+      "techniques": ["precision", "interfacing"]
+    },
+    "bent": {
+      "id": "bent",
+      "name": "Bent body block",
+      "garment_type": "block",
+      "subtype": "body-block-mens",
+      "attributes": {
+        "sleeves": "two-part-set",
+        "gender_cut": "menswear"
+      },
+      "gender": "masculine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["blocks", "tops"],
+      "techniques": ["hem", "curved-seam", "set-sleeve"],
+      "notes": "Menswear body block with two-part sleeve"
+    },
+    "bibi": {
+      "id": "bibi",
+      "name": "Bibi body block",
+      "garment_type": "block",
+      "subtype": "body-block-knit",
+      "attributes": {
+        "sleeves": "flat",
+        "fabric_type": "knit"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["blocks", "tops"],
+      "techniques": ["curved-seam", "hem", "flat-sleeve"],
+      "notes": "Knit top foundation block"
+    },
+    "bob": {
+      "id": "bob",
+      "name": "Bob the bib",
+      "garment_type": "accessories",
+      "subtype": "bib",
+      "attributes": {
+        "closure": "snap",
+        "has_curved_edge": true
+      },
+      "gender": "unisex",
+      "target_audience": "infant",
+      "difficulty": 3,
+      "tags": ["accessories", "infants"],
+      "techniques": ["bias-tape", "curved-seam", "snap"]
+    },
+    "bonny": {
+      "id": "bonny",
+      "name": "Bonny body outline",
+      "garment_type": "utility",
+      "subtype": "body-outline",
+      "attributes": {},
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": [],
+      "techniques": [],
+      "notes": "Converts measurements into a body outline — not a garment pattern"
+    },
+    "breanna": {
+      "id": "breanna",
+      "name": "Breanna body block",
+      "garment_type": "block",
+      "subtype": "body-block-womens",
+      "attributes": {
+        "fit": "fitted",
+        "has_dart": true,
+        "gender_cut": "womenswear"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["blocks", "tops"],
+      "techniques": ["block", "dart"],
+      "notes": "Basic womenswear body block"
+    },
+    "brian": {
+      "id": "brian",
+      "name": "Brian body block",
+      "garment_type": "block",
+      "subtype": "body-block-mens",
+      "attributes": {
+        "sleeves": "flat",
+        "gender_cut": "menswear"
+      },
+      "gender": "masculine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["blocks", "tops"],
+      "techniques": ["block", "flat-sleeve"],
+      "notes": "Basic menswear body block"
+    },
+    "bruce": {
+      "id": "bruce",
+      "name": "Bruce boxer briefs",
+      "garment_type": "underwear",
+      "subtype": "boxer-briefs",
+      "attributes": {
+        "fit": "fitted",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband"
+      },
+      "gender": "masculine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "underwear"],
+      "techniques": ["stretch", "hem", "curved-seam", "elastic"]
+    },
+    "carlita": {
+      "id": "carlita",
+      "name": "Carlita coat",
+      "garment_type": "coats",
+      "subtype": "long-coat",
+      "attributes": {
+        "sleeves": "set-in",
+        "length": "long",
+        "fit": "fitted",
+        "has_lining": true,
+        "closure": "button",
+        "has_welt_pocket": true,
+        "has_princess_seam": true,
+        "gender_cut": "womenswear"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 5,
+      "tags": ["tops", "coats"],
+      "techniques": ["hem", "pocket", "curved-seam", "precision", "set-sleeve", "welt-pocket", "lining", "princess-seam", "interfacing", "button"],
+      "also_suitable_as": ["cosplay", "formal-coat"]
+    },
+    "carlton": {
+      "id": "carlton",
+      "name": "Carlton coat",
+      "garment_type": "coats",
+      "subtype": "long-coat",
+      "attributes": {
+        "sleeves": "set-in",
+        "length": "long",
+        "fit": "fitted",
+        "has_lining": true,
+        "closure": "button",
+        "has_welt_pocket": true,
+        "gender_cut": "menswear"
+      },
+      "gender": "masculine",
+      "target_audience": "adult",
+      "difficulty": 5,
+      "tags": ["tops", "coats"],
+      "techniques": ["hem", "pocket", "curved-seam", "precision", "set-sleeve", "welt-pocket", "lining", "interfacing", "button"],
+      "also_suitable_as": ["cosplay", "formal-coat"]
+    },
+    "cathrin": {
+      "id": "cathrin",
+      "name": "Cathrin corset",
+      "garment_type": "underwear",
+      "subtype": "corset",
+      "attributes": {
+        "fit": "fitted",
+        "has_boning": true,
+        "style": "underbust",
+        "has_interfacing": true
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 4,
+      "tags": ["tops", "underwear"],
+      "techniques": ["boning", "precision", "curved-seam", "interfacing"],
+      "also_suitable_as": ["waist-trainer"]
+    },
+    "charlie": {
+      "id": "charlie",
+      "name": "Charlie chinos",
+      "garment_type": "bottoms",
+      "subtype": "trousers",
+      "style": "chinos",
+      "attributes": {
+        "fit": "regular",
+        "length": "full",
+        "closure": "fly-zipper-button",
+        "has_welt_pocket": true,
+        "has_seam_pocket": true,
+        "has_dart": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "trousers"],
+      "techniques": ["welt-pocket", "curved-seam", "interfacing", "fly", "zipper", "button", "dart", "hem", "seam-pocket"]
+    },
+    "cornelius": {
+      "id": "cornelius",
+      "name": "Cornelius cycling breeches",
+      "garment_type": "bottoms",
+      "subtype": "breeches",
+      "style": "cycling",
+      "attributes": {
+        "fit": "fitted",
+        "length": "below-knee",
+        "closure": "fly-zipper-button",
+        "has_pocket": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "trousers"],
+      "techniques": ["curved-seam", "fly", "zipper", "button", "pocket"]
+    },
+    "diana": {
+      "id": "diana",
+      "name": "Diana draped top",
+      "garment_type": "tops",
+      "subtype": "draped-top",
+      "attributes": {
+        "sleeves": "short-flat",
+        "neckline": "draped",
+        "fit": "relaxed"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "flat-sleeve", "hem"]
+    },
+    "examples": {
+      "id": "examples",
+      "name": "Examples",
+      "garment_type": "utility",
+      "subtype": "example-patterns",
+      "attributes": {},
+      "notes": "Example patterns for development/testing — not a garment design"
+    },
+    "florence": {
+      "id": "florence",
+      "name": "Florence face mask",
+      "garment_type": "accessories",
+      "subtype": "face-mask",
+      "attributes": {
+        "has_curved_seam": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": ["accessories"],
+      "techniques": ["curved-seam"]
+    },
+    "florent": {
+      "id": "florent",
+      "name": "Florent flat cap",
+      "garment_type": "accessories",
+      "subtype": "hat",
+      "style": "flat-cap",
+      "attributes": {
+        "has_brim": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["accessories", "hats"],
+      "techniques": ["curved-seam"]
+    },
+    "gozer": {
+      "id": "gozer",
+      "name": "Gozer ghost costume",
+      "garment_type": "costumes",
+      "subtype": "ghost-costume",
+      "attributes": {
+        "fit": "loose",
+        "length": "full"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": ["costumes"],
+      "techniques": ["hem"]
+    },
+    "hi": {
+      "id": "hi",
+      "name": "Hi the shark",
+      "garment_type": "toys",
+      "subtype": "plush-toy",
+      "style": "shark",
+      "attributes": {
+        "has_dart": true
+      },
+      "gender": "unisex",
+      "target_audience": "all",
+      "difficulty": 4,
+      "tags": ["accessories", "toys"],
+      "techniques": ["curved-seam", "dart"]
+    },
+    "holmes": {
+      "id": "holmes",
+      "name": "Holmes deerstalker hat",
+      "garment_type": "accessories",
+      "subtype": "hat",
+      "style": "deerstalker",
+      "attributes": {
+        "has_lining": true,
+        "has_brim": true,
+        "has_ear_flaps": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["accessories", "hats"],
+      "techniques": ["curved-seam", "lining"],
+      "also_suitable_as": ["cosplay"]
+    },
+    "hortensia": {
+      "id": "hortensia",
+      "name": "Hortensia handbag",
+      "garment_type": "accessories",
+      "subtype": "bag",
+      "style": "handbag",
+      "attributes": {
+        "has_lining": true,
+        "closure": "zipper"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["accessories", "bags"],
+      "techniques": ["curved-seam", "precision", "lining", "zipper"]
+    },
+    "huey": {
+      "id": "huey",
+      "name": "Huey hoodie",
+      "garment_type": "tops",
+      "subtype": "hoodie",
+      "style": "zip-up",
+      "attributes": {
+        "sleeves": "flat-set",
+        "fit": "relaxed",
+        "has_hood": true,
+        "closure": "zipper",
+        "has_pocket": true,
+        "fabric_type": "knit"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "pocket", "zipper", "ribbing", "flat-sleeve"]
+    },
+    "hugo": {
+      "id": "hugo",
+      "name": "Hugo hoodie",
+      "garment_type": "tops",
+      "subtype": "hoodie",
+      "style": "pullover",
+      "attributes": {
+        "sleeves": "raglan",
+        "fit": "relaxed",
+        "has_hood": true,
+        "closure": "none",
+        "has_pocket": true,
+        "fabric_type": "knit"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "pocket", "ribbing", "raglan-sleeve"]
+    },
+    "jaeger": {
+      "id": "jaeger",
+      "name": "Jaeger jacket",
+      "garment_type": "coats",
+      "subtype": "jacket",
+      "style": "sport-coat",
+      "attributes": {
+        "sleeves": "set-in",
+        "fit": "fitted",
+        "length": "hip",
+        "has_lining": true,
+        "closure": "button",
+        "has_welt_pocket": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 5,
+      "tags": ["tops", "coats"],
+      "techniques": ["hem", "pocket", "curved-seam", "precision", "set-sleeve", "welt-pocket", "lining", "interfacing", "button"]
+    },
+    "jane": {
+      "id": "jane",
+      "name": "Jane 1970s shift",
+      "garment_type": "historical",
+      "subtype": "shift",
+      "attributes": {
+        "sleeves": "long",
+        "fit": "loose",
+        "length": "full",
+        "era": "1790s"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["tops", "historical", "underwear"],
+      "techniques": ["hem"],
+      "also_suitable_as": ["nightgown", "underlayer"]
+    },
+    "legend": {
+      "id": "legend",
+      "name": "Legend",
+      "garment_type": "utility",
+      "subtype": "legend",
+      "attributes": {},
+      "notes": "Pattern legend/key — not a garment design"
+    },
+    "lily": {
+      "id": "lily",
+      "name": "Lily leggings",
+      "garment_type": "bottoms",
+      "subtype": "leggings",
+      "style": "basic",
+      "attributes": {
+        "fit": "fitted",
+        "length": "full",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["bottoms"],
+      "techniques": ["elastic", "curved-seam", "hem"]
+    },
+    "lucy": {
+      "id": "lucy",
+      "name": "Lucy tie-on pocket",
+      "garment_type": "accessories",
+      "subtype": "pocket",
+      "style": "historical-tie-on",
+      "attributes": {
+        "closure": "tie",
+        "era": "historical"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["accessories", "historical", "bags"],
+      "techniques": ["curved-seam"]
+    },
+    "lumina": {
+      "id": "lumina",
+      "name": "Lumina leggings",
+      "garment_type": "bottoms",
+      "subtype": "leggings",
+      "style": "fitted",
+      "attributes": {
+        "fit": "fitted",
+        "length": "full",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "trousers"],
+      "techniques": ["stretch", "curved-seam", "elastic"]
+    },
+    "lumira": {
+      "id": "lumira",
+      "name": "Lumira leggings",
+      "garment_type": "bottoms",
+      "subtype": "leggings",
+      "style": "fitted",
+      "attributes": {
+        "fit": "fitted",
+        "length": "full",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "trousers"],
+      "techniques": ["stretch", "curved-seam", "elastic"],
+      "notes": "Variant of Lumina leggings"
+    },
+    "lunetius": {
+      "id": "lunetius",
+      "name": "Lunetius lacerna",
+      "garment_type": "historical",
+      "subtype": "cloak",
+      "style": "lacerna",
+      "attributes": {
+        "fit": "loose",
+        "length": "full",
+        "era": "Roman"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": ["tops", "coats", "historical"],
+      "techniques": ["hem"],
+      "also_suitable_as": ["cosplay"]
+    },
+    "magde": {
+      "id": "magde",
+      "name": "Magde messenger bag",
+      "garment_type": "accessories",
+      "subtype": "bag",
+      "style": "messenger",
+      "attributes": {
+        "closure": "flap",
+        "has_strap": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["accessories", "bags"],
+      "techniques": [],
+      "also_suitable_as": ["bike-bag", "shoulder-bag"]
+    },
+    "noble": {
+      "id": "noble",
+      "name": "Noble body block",
+      "garment_type": "block",
+      "subtype": "bodice-block",
+      "style": "princess-seam",
+      "attributes": {
+        "fit": "fitted",
+        "has_princess_seam": true,
+        "gender_cut": "womenswear"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["blocks", "tops"],
+      "techniques": ["block", "curved-seam", "precision", "princess-seam"],
+      "notes": "Princess seam bodice foundation block"
+    },
+    "octoplushy": {
+      "id": "octoplushy",
+      "name": "Octoplushy the octopus",
+      "garment_type": "toys",
+      "subtype": "plush-toy",
+      "style": "octopus",
+      "attributes": {},
+      "gender": "unisex",
+      "target_audience": "all",
+      "difficulty": 4,
+      "tags": ["accessories", "toys"],
+      "techniques": ["curved-seam", "precision"]
+    },
+    "onyx": {
+      "id": "onyx",
+      "name": "Onyx one-piece",
+      "garment_type": "one-piece",
+      "subtype": "one-piece",
+      "attributes": {
+        "fit": "fitted",
+        "has_lining": true,
+        "closure": "zipper",
+        "fabric_type": "stretch"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 4,
+      "tags": ["swimwear", "pajamas", "onePiece"],
+      "techniques": ["hem", "curved-seam", "stretch", "lining", "zipper", "ribbing"],
+      "also_suitable_as": ["swimsuit", "pajamas", "bodysuit"]
+    },
+    "opal": {
+      "id": "opal",
+      "name": "Opal overalls",
+      "garment_type": "one-piece",
+      "subtype": "overalls",
+      "attributes": {
+        "fit": "relaxed",
+        "closure": "button",
+        "has_pocket": true,
+        "has_bib": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["overalls", "onePiece"],
+      "techniques": ["flat-felled-seam", "hem", "curved-seam", "button", "pocket"]
+    },
+    "otis": {
+      "id": "otis",
+      "name": "Otis romper",
+      "garment_type": "one-piece",
+      "subtype": "romper",
+      "attributes": {
+        "fit": "relaxed",
+        "length": "short"
+      },
+      "gender": "unisex",
+      "target_audience": "infant",
+      "difficulty": 2,
+      "tags": [],
+      "techniques": []
+    },
+    "paco": {
+      "id": "paco",
+      "name": "Paco pants",
+      "garment_type": "bottoms",
+      "subtype": "trousers",
+      "style": "summer-pants",
+      "attributes": {
+        "fit": "relaxed",
+        "length": "full",
+        "closure": "elastic-waistband",
+        "has_welt_pocket": true,
+        "has_pocket": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "trousers"],
+      "techniques": ["elastic", "curved-seam", "pocket", "welt-pocket", "hem"]
+    },
+    "penelope": {
+      "id": "penelope",
+      "name": "Penelope pencil skirt",
+      "garment_type": "bottoms",
+      "subtype": "skirt",
+      "style": "pencil",
+      "attributes": {
+        "fit": "fitted",
+        "silhouette": "pencil",
+        "length": "knee-to-midi",
+        "closure": "zipper"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "skirts"],
+      "techniques": ["hem", "curved-seam", "precision", "zipper"]
+    },
+    "plugintest": {
+      "id": "plugintest",
+      "name": "Plugin test",
+      "garment_type": "utility",
+      "subtype": "plugin-test",
+      "attributes": {},
+      "notes": "Developer test pattern — not a garment design"
+    },
+    "rendertest": {
+      "id": "rendertest",
+      "name": "Render test",
+      "garment_type": "utility",
+      "subtype": "render-test",
+      "attributes": {},
+      "notes": "Developer render test — not a garment design"
+    },
+    "sandy": {
+      "id": "sandy",
+      "name": "Sandy circle skirt",
+      "garment_type": "bottoms",
+      "subtype": "skirt",
+      "style": "circle",
+      "attributes": {
+        "fit": "flared",
+        "silhouette": "circle",
+        "closure": "button"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["bottoms", "skirts"],
+      "techniques": ["curved-seam", "button", "hem"]
+    },
+    "shelly": {
+      "id": "shelly",
+      "name": "Shelly swim shirt",
+      "garment_type": "swimwear",
+      "subtype": "swim-shirt",
+      "attributes": {
+        "sleeves": "raglan",
+        "fit": "relaxed",
+        "fabric_type": "stretch"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["tops", "swimwear"],
+      "techniques": ["hem", "stretch", "curved-seam", "raglan-sleeve"],
+      "also_suitable_as": ["rash-guard", "athletic-top"]
+    },
+    "shin": {
+      "id": "shin",
+      "name": "Shin swim trunks",
+      "garment_type": "swimwear",
+      "subtype": "swim-trunks",
+      "attributes": {
+        "fit": "relaxed",
+        "length": "mid-thigh",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["bottoms", "swimwear"],
+      "techniques": ["hem", "stretch", "curved-seam", "elastic"]
+    },
+    "simon": {
+      "id": "simon",
+      "name": "Simon button-down shirt",
+      "garment_type": "tops",
+      "subtype": "button-down-shirt",
+      "style": "classic",
+      "attributes": {
+        "sleeves": "long-flat-set",
+        "collar": "shirt-collar",
+        "fit": "regular",
+        "closure": "button",
+        "fabric_type": "woven",
+        "has_interfacing": true,
+        "gender_cut": "menswear"
+      },
+      "gender": "masculine",
+      "target_audience": "adult",
+      "difficulty": 4,
+      "tags": ["tops"],
+      "techniques": ["hem", "button", "interfacing", "curved-seam", "flat-felled-seam", "flat-sleeve"]
+    },
+    "simone": {
+      "id": "simone",
+      "name": "Simone button-down shirt",
+      "garment_type": "tops",
+      "subtype": "button-down-shirt",
+      "style": "classic",
+      "attributes": {
+        "sleeves": "long-flat-set",
+        "collar": "shirt-collar",
+        "fit": "regular",
+        "closure": "button",
+        "fabric_type": "woven",
+        "has_interfacing": true,
+        "gender_cut": "womenswear"
+      },
+      "gender": "feminine",
+      "target_audience": "adult",
+      "difficulty": 4,
+      "tags": ["tops"],
+      "techniques": ["hem", "button", "interfacing", "curved-seam", "flat-felled-seam", "flat-sleeve"],
+      "notes": "Womenswear version of Simon"
+    },
+    "skully": {
+      "id": "skully",
+      "name": "Skully the FreeSewing mascot",
+      "garment_type": "toys",
+      "subtype": "plush-toy",
+      "style": "skull-mascot",
+      "attributes": {},
+      "gender": "unisex",
+      "target_audience": "all",
+      "difficulty": 4,
+      "tags": ["accessories", "toys"],
+      "techniques": ["curved-seam", "precision"]
+    },
+    "sven": {
+      "id": "sven",
+      "name": "Sven sweatshirt",
+      "garment_type": "tops",
+      "subtype": "sweatshirt",
+      "style": "pullover",
+      "attributes": {
+        "sleeves": "flat-set",
+        "fit": "relaxed",
+        "neckline": "crew",
+        "closure": "none",
+        "fabric_type": "knit"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "flat-sleeve", "ribbing"]
+    },
+    "tamiko": {
+      "id": "tamiko",
+      "name": "Tamiko zero-waste top",
+      "garment_type": "tops",
+      "subtype": "zero-waste-top",
+      "attributes": {
+        "fit": "relaxed",
+        "zero_waste": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": ["tops"],
+      "techniques": ["curved-seam"]
+    },
+    "teagan": {
+      "id": "teagan",
+      "name": "Teagan T-shirt",
+      "garment_type": "tops",
+      "subtype": "t-shirt",
+      "attributes": {
+        "sleeves": "short-flat",
+        "neckline": "crew",
+        "fit": "regular",
+        "closure": "none",
+        "fabric_type": "knit"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "hem", "flat-sleeve", "knit-band"]
+    },
+    "tiberius": {
+      "id": "tiberius",
+      "name": "Tiberius tunica",
+      "garment_type": "historical",
+      "subtype": "tunic",
+      "style": "Roman-tunica",
+      "attributes": {
+        "sleeves": "short",
+        "fit": "loose",
+        "length": "knee",
+        "era": "Roman"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": ["tops", "historical"],
+      "techniques": [],
+      "also_suitable_as": ["cosplay"]
+    },
+    "titan": {
+      "id": "titan",
+      "name": "Titan trouser block",
+      "garment_type": "block",
+      "subtype": "trouser-block",
+      "attributes": {
+        "gender_cut": "unisex"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["blocks", "bottoms"],
+      "techniques": [],
+      "notes": "Unisex trouser foundation block"
+    },
+    "trayvon": {
+      "id": "trayvon",
+      "name": "Trayvon tie",
+      "garment_type": "accessories",
+      "subtype": "tie",
+      "style": "necktie",
+      "attributes": {
+        "has_lining": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["accessories"],
+      "techniques": ["precision", "lining"]
+    },
+    "tristan": {
+      "id": "tristan",
+      "name": "Tristan top",
+      "garment_type": "tops",
+      "subtype": "fitted-top",
+      "style": "princess-seam",
+      "attributes": {
+        "fit": "fitted",
+        "has_princess_seam": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "precision"]
+    },
+    "uma": {
+      "id": "uma",
+      "name": "Uma undies",
+      "garment_type": "underwear",
+      "subtype": "underpants",
+      "style": "basic",
+      "attributes": {
+        "fit": "fitted",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband",
+        "highly_customizable": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["bottoms", "underwear"],
+      "techniques": ["elastic", "curved-seam"]
+    },
+    "umbra": {
+      "id": "umbra",
+      "name": "Umbra undies",
+      "garment_type": "underwear",
+      "subtype": "underpants",
+      "style": "basic",
+      "attributes": {
+        "fit": "fitted",
+        "fabric_type": "stretch",
+        "closure": "elastic-waistband",
+        "highly_customizable": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["bottoms", "underwear"],
+      "techniques": ["elastic", "curved-seam"],
+      "notes": "Variant of Uma undies"
+    },
+    "wahid": {
+      "id": "wahid",
+      "name": "Wahid waistcoat",
+      "garment_type": "tops",
+      "subtype": "waistcoat",
+      "style": "classic",
+      "attributes": {
+        "sleeves": "none",
+        "fit": "fitted",
+        "has_lining": true,
+        "closure": "button",
+        "has_welt_pocket": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 4,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "hem", "interfacing", "lining", "welt-pocket", "button"],
+      "also_suitable_as": ["vest", "formal-wear"]
+    },
+    "walburga": {
+      "id": "walburga",
+      "name": "Walburga wappenrock",
+      "garment_type": "historical",
+      "subtype": "tabard",
+      "style": "wappenrock",
+      "attributes": {
+        "fit": "loose",
+        "length": "knee",
+        "era": "medieval-European"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 1,
+      "tags": ["bottoms", "historical"],
+      "techniques": ["hem"],
+      "also_suitable_as": ["cosplay", "surcoat"]
+    },
+    "waralee": {
+      "id": "waralee",
+      "name": "Waralee wrap pants",
+      "garment_type": "bottoms",
+      "subtype": "wrap-pants",
+      "attributes": {
+        "fit": "relaxed",
+        "length": "full",
+        "closure": "tie",
+        "has_welt_pocket": true
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 2,
+      "tags": ["bottoms", "trousers"],
+      "techniques": ["curved-seam", "hem", "welt-pocket"]
+    },
+    "yuri": {
+      "id": "yuri",
+      "name": "Yuri sweater",
+      "garment_type": "tops",
+      "subtype": "sweater",
+      "style": "zipless",
+      "attributes": {
+        "sleeves": "long-flat-set",
+        "fit": "relaxed",
+        "neckline": "crew",
+        "closure": "button",
+        "fabric_type": "knit"
+      },
+      "gender": "unisex",
+      "target_audience": "adult",
+      "difficulty": 3,
+      "tags": ["tops"],
+      "techniques": ["curved-seam", "flat-sleeve", "hem", "button"],
+      "notes": "Based on the Huey hoodie, no zip"
+    }
+  }
+}
