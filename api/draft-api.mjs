@@ -210,6 +210,42 @@ app.post('/api/draft', (req, res) => {
   }
 })
 
+/**
+ * @openapi
+ * /api/patterns/{filename}:
+ *   get:
+ *     summary: Retrieve a drafted pattern file
+ *     description: Returns the SVG file content for a previously drafted pattern.
+ *     parameters:
+ *       - in: path
+ *         name: filename
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The filename returned by the /api/draft endpoint.
+ *     responses:
+ *       200:
+ *         description: The SVG file content.
+ *         content:
+ *           image/svg+xml:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       404:
+ *         description: Pattern file not found.
+ */
+app.get('/api/patterns/:filename', (req, res) => {
+  const { filename } = req.params
+  const filePath = path.join(process.cwd(), 'dist', filename)
+
+  if (fs.existsSync(filePath)) {
+    res.setHeader('Content-Type', 'image/svg+xml')
+    res.sendFile(filePath)
+  } else {
+    res.status(404).json({ error: 'Pattern file not found' })
+  }
+})
+
 // Swagger
 const swaggerOptions = {
   definition: {
