@@ -1,26 +1,71 @@
 import express from 'express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { Aaron } from '@freesewing/aaron'
-import { Albert } from '@freesewing/albert'
-import { Yuri } from '@freesewing/yuri'
-import { cisMaleAdult40 } from '@freesewing/models'
 import { themePlugin } from '@freesewing/plugin-theme'
 import { pluginI18n } from '@freesewing/plugin-i18n'
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+// Load default measurements and per-design measurement keys from local JSON
+const { measurements: defaultMeasurements, designMeasurements } = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'measurements.json'), 'utf-8')
+)
+
+// Folders in the designs directory that are not actual garment patterns
+const SKIP = new Set(['examples', 'legend', 'plugintest', 'rendertest', 'bonny'])
+
+// Discover all design folders and dynamically import each @freesewing/<name> package.
+// Designs whose package isn't installed yet are silently skipped.
+const designs = {}
+const designsDir = path.join(__dirname, '../designs')
+
+for (const name of fs.readdirSync(designsDir)) {
+  if (SKIP.has(name)) continue
+  if (!fs.statSync(path.join(designsDir, name)).isDirectory()) continue
+
+  try {
+    const exportName = name.charAt(0).toUpperCase() + name.slice(1)
+    const mod = await import(`@freesewing/${name}`)
+    if (mod[exportName]) {
+      designs[name] = mod[exportName]
+    }
+  } catch {
+    // Package not installed — skip silently
+  }
+}
+
+console.log(`Loaded ${Object.keys(designs).length} designs: ${Object.keys(designs).join(', ')}`)
 
 const app = express()
 const port = process.env.PORT || 9000
 
 app.use(express.json())
 
-// Map of available designs
-const designs = {
-  aaron: Aaron,
-  albert: Albert,
-  yuri: Yuri,
-}
+/**
+ * @openapi
+ * /api/designs:
+ *   get:
+ *     summary: List all available designs
+ *     description: Returns the names of every design whose package is currently installed.
+ *     responses:
+ *       200:
+ *         description: Array of design names.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 designs:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ */
+app.get('/api/designs', (_req, res) => {
+  res.json({ designs: Object.keys(designs) })
+})
 
 /**
  * @openapi
@@ -57,7 +102,10 @@ app.get('/api/designs/:design', (req, res) => {
   const DesignClass = designs[design.toLowerCase()]
 
   if (!DesignClass) {
-    return res.status(404).json({ error: `Design '${design}' not found.` })
+    return res.status(404).json({
+      error: `Design '${design}' not found.`,
+      available: Object.keys(designs),
+    })
   }
 
   const config = DesignClass.patternConfig || {}
@@ -86,8 +134,7 @@ app.get('/api/designs/:design', (req, res) => {
  *                 description: The name of the design to draft (e.g., 'aaron').
  *               measurements:
  *                 type: object
- *                 description: |
- *                   Body measurements in millimeters.
+ *                 description: Body measurements in millimeters.
  *                 example:
  *                   chest: 1053
  *                   hips: 884
@@ -97,8 +144,7 @@ app.get('/api/designs/:design', (req, res) => {
  *                   waistToHips: 134
  *               options:
  *                 type: object
- *                 description: |
- *                   Design-specific options.
+ *                 description: Design-specific options.
  *                 example: {}
  *     responses:
  *       200:
@@ -118,31 +164,30 @@ app.get('/api/designs/:design', (req, res) => {
  *         description: Invalid request or design not found.
  */
 app.post('/api/draft', (req, res) => {
-  const { design = 'aaron', measurements = cisMaleAdult40, options = {} } = req.body
+  const { design = 'aaron', measurements: rawMeasurements, options = {} } = req.body
+
+  // Merge provided measurements over defaults, then filter to only what this design needs
+  const merged = { ...defaultMeasurements, ...(rawMeasurements || {}) }
+  const needed = designMeasurements[design.toLowerCase()] || []
+  const measurements = needed.length > 0
+    ? Object.fromEntries(needed.map(k => [k, merged[k]]).filter(([, v]) => v !== undefined))
+    : merged
 
   const DesignClass = designs[design.toLowerCase()]
   if (!DesignClass) {
-    return res
-      .status(400)
-      .json({
-        error: `Design '${design}' not found. Available: ${Object.keys(designs).join(', ')}`,
-      })
+    return res.status(400).json({
+      error: `Design '${design}' not found.`,
+      available: Object.keys(designs),
+    })
   }
 
   try {
-    const settings = {
-      measurements,
-      options,
-      embed: false,
-    }
-
-    const pattern = new DesignClass(settings)
+    const pattern = new DesignClass({ measurements, options, embed: false })
     pattern.use(themePlugin, { stripped: false, skipGrid: ['pages'] })
     pattern.use(pluginI18n, (key) => key)
-
     pattern.draft()
 
-    // Optional: Clean up snippets if needed (matching draft-pattern.mjs logic)
+    // Remove logo snippets
     const draftedParts = pattern.parts[0]
     for (const name in draftedParts) {
       if (draftedParts[name].snippets?.logo) {
@@ -151,28 +196,21 @@ app.post('/api/draft', (req, res) => {
     }
 
     const svg = pattern.render()
-    
-    // Save to dist folder
+
     const distDir = path.join(process.cwd(), 'dist')
-    if (!fs.existsSync(distDir)) {
-      fs.mkdirSync(distDir, { recursive: true })
-    }
+    if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true })
     const filename = `${design}-${Date.now()}.svg`
     const filePath = path.join(distDir, filename)
     fs.writeFileSync(filePath, svg)
-    
-    res.json({
-      message: 'Pattern drafted successfully',
-      file: filename,
-      path: filePath
-    })
+
+    res.json({ message: 'Pattern drafted successfully', file: filename, path: filePath })
   } catch (error) {
     console.error('Drafting error:', error)
     res.status(500).json({ error: 'Failed to draft pattern', message: error.message })
   }
 })
 
-// Swagger definition
+// Swagger
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -181,13 +219,9 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'An API to programmatically draft FreeSewing patterns.',
     },
-    servers: [
-      {
-        url: `http://localhost:${port}`,
-      },
-    ],
+    servers: [{ url: `http://localhost:${port}` }],
   },
-  apis: ['./draft-api.mjs'], // Search for @openapi in this file
+  apis: ['./draft-api.mjs'],
 }
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions)
