@@ -1,6 +1,8 @@
 import express from 'express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import * as dotenv from 'dotenv'
 import { themePlugin } from '@freesewing/plugin-theme'
 import { pluginI18n } from '@freesewing/plugin-i18n'
 import fs from 'fs'
@@ -8,6 +10,17 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+dotenv.config()
+
+const s3Client = new S3Client({
+  region: 'auto',
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+})
 
 // Load default measurements and per-design measurement keys from local JSON
 const { measurements: defaultMeasurements, designMeasurements } = JSON.parse(
@@ -243,6 +256,70 @@ app.get('/api/patterns/:filename', (req, res) => {
     res.sendFile(filePath)
   } else {
     res.status(404).json({ error: 'Pattern file not found' })
+  }
+})
+
+/**
+ * @openapi
+ * /api/patterns/{filename}/upload:
+ *   post:
+ *     summary: Upload a drafted pattern to S3/R2
+ *     description: Transfers a local SVG pattern from the 'dist' folder to the configured S3-compatible storage (Cloudflare R2).
+ *     parameters:
+ *       - in: path
+ *         name: filename
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The filename of the drafted pattern.
+ *     responses:
+ *       200:
+ *         description: Successfully uploaded.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 url:
+ *                   type: string
+ *                 key:
+ *                   type: string
+ *       404:
+ *         description: Local file not found.
+ *       500:
+ *         description: Upload failed.
+ */
+app.post('/api/patterns/:filename/upload', async (req, res) => {
+  const { filename } = req.params
+  const filePath = path.join(process.cwd(), 'dist', filename)
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: 'Pattern file not found' })
+  }
+
+  try {
+    const fileBuffer = fs.readFileSync(filePath)
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: process.env.R2_BUCKET_NAME,
+        Key: `patterns/${filename}`,
+        Body: fileBuffer,
+        ContentType: 'image/svg+xml',
+      })
+    )
+
+    const publicUrl = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/patterns/${filename}`
+
+    res.json({ 
+      message: 'Uploaded successfully', 
+      url: publicUrl, 
+      key: `patterns/${filename}` 
+    })
+  } catch (error) {
+    console.error('Upload error:', error)
+    res.status(500).json({ error: 'Failed to upload to S3', message: error.message })
   }
 })
 
