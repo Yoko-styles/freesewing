@@ -176,8 +176,14 @@ app.get('/api/designs/:design', (req, res) => {
  *       400:
  *         description: Invalid request or design not found.
  */
-app.post('/api/draft', (req, res) => {
-  const { design = 'aaron', measurements: rawMeasurements, options = {} } = req.body
+app.post('/api/draft', async (req, res) => {
+  const { 
+    design = 'aaron', 
+    measurements: rawMeasurements, 
+    options = {}, 
+    user_id, 
+    sessionId 
+  } = req.body
 
   // Merge provided measurements over defaults, then filter to only what this design needs
   const merged = { ...defaultMeasurements, ...(rawMeasurements || {}) }
@@ -212,11 +218,44 @@ app.post('/api/draft', (req, res) => {
 
     const distDir = path.join(process.cwd(), 'dist')
     if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true })
-    const filename = `${design}-${Date.now()}.svg`
+    
+    // Determine S3 Key and Filename
+    let filename
+    let s3Key
+    if (user_id && sessionId) {
+      filename = `${sessionId}.svg`
+      s3Key = `session-drafts/${user_id}/${sessionId}.svg`
+    } else {
+      filename = `${design}-${Date.now()}.svg`
+      s3Key = `patterns/${filename}`
+    }
+
     const filePath = path.join(distDir, filename)
     fs.writeFileSync(filePath, svg)
 
-    res.json({ message: 'Pattern drafted successfully', file: filename, path: filePath })
+    // Upload to S3/R2 immediately
+    let publicUrl = null
+    try {
+      await s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.R2_BUCKET_NAME,
+          Key: s3Key,
+          Body: svg,
+          ContentType: 'image/svg+xml',
+        })
+      )
+      publicUrl = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${s3Key}`
+    } catch (uploadError) {
+      console.error('Cloud upload failed:', uploadError)
+    }
+
+    res.json({ 
+      message: 'Pattern drafted successfully', 
+      file: filename, 
+      path: filePath,
+      url: publicUrl,
+      key: s3Key
+    })
   } catch (error) {
     console.error('Drafting error:', error)
     res.status(500).json({ error: 'Failed to draft pattern', message: error.message })
