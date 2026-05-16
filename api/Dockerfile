@@ -14,7 +14,7 @@ RUN echo '{ \
     "js-yaml":"^4.1.1", \
     "pdfkit":"^0.18.0", \
     "svg-to-pdfkit":"^0.1.8", \
-    "@freesewing/core":"next", \
+    "@freesewing/core":"4.0.0", \
     "@freesewing/config":"next", \
     "@freesewing/models":"next", \
     "@freesewing/utils":"next", \
@@ -82,10 +82,10 @@ RUN echo '{ \
   } \
 }' > package.json
 
-RUN npm install --no-audit
+RUN npm install --no-audit --legacy-peer-deps
 
 COPY packages/react/components/Editor/lib/export/ ./packages/react/components/Editor/lib/export/
-COPY api/export-pattern.mjs api/measurements.json api/plugin-tiler.mjs ./api/
+COPY api/export-pattern.mjs api/measurements.json ./api/
 
 EXPOSE 9001
 
