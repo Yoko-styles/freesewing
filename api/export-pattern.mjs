@@ -22,7 +22,7 @@ import { pluginI18n } from '@freesewing/plugin-i18n'
 import { cisMaleAdult40 } from '@freesewing/models'
 import { PdfMaker } from '../packages/react/components/Editor/lib/export/pdf-maker.mjs'
 import { SinglePdfMaker } from '../packages/react/components/Editor/lib/export/single-pdf-maker.mjs'
-import { tilerPlugin } from '../packages/react/components/Editor/lib/export/plugin-tiler.mjs'
+import { tilerPlugin } from './plugin-tiler.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.join(__dirname, 'dist')
