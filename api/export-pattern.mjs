@@ -105,7 +105,7 @@ async function exportPattern({ design, format, measurements, options }) {
     const pages = pattern.setStores[pattern.activeSet].get('pages')
     const strings = {
       design: design.charAt(0).toUpperCase() + design.slice(1),
-      tagline: 'FreeSewing — sewing patterns for everyone',
+      tagline: 'Yoko Styles — sewing patterns for everyone',
       url: '',
       cuttingLayout: 'Cutting layout',
       setName: 'Default',

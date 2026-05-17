@@ -1,12 +1,11 @@
 //  __SDEFILE__ - This file is a dependency for the stand-alone environment
 import { Pdf, mmToPoints } from './pdf.mjs'
 import SVGtoPDF from 'svg-to-pdfkit'
+/** Yoko Styles logo for the PDF cover page */
 import { logoPath } from '@freesewing/config'
 
-/** an svg of the logo to put on the cover page */
-const logoSvg = `<svg viewBox="0 0 25 25">
-	<style> path {fill: none; stroke: #555555; stroke-width: 0.25} </style>
-  <path d="${logoPath}" />
+const logoSvg = `<svg viewBox="0 0 42 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="${logoPath}" fill="#D07D7A" />
 </svg>`
 
 const lineStart = 50
@@ -118,8 +117,8 @@ export class PdfMaker {
 
   /** generate the title for the cover page */
   async generateCoverPageTitle() {
-    // FreeSewing tag
-    this.addText('FreeSewing', 20).addText(this.strings.tagline, 10, 4)
+    // Yoko Styles tag
+    this.addText('Yoko Styles', 20).addText(this.strings.tagline, 10, 4)
 
     // Design name, version, and Measurement Set
     this.addText(this.strings.design, 32)
