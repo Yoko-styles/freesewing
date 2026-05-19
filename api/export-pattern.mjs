@@ -65,6 +65,47 @@ async function blobToBuffer(blob) {
   return Buffer.from(await blob.arrayBuffer())
 }
 
+// ─── SVG post-processors ──────────────────────────────────────────────────────
+
+// For SVG format: inject a <style> block — browsers fully honour CSS specificity.
+// Mirrors PatternDraftLayer.tsx so the downloaded SVG matches the web preview.
+function processFreeSewingSvg(svg) {
+  const overrides = `<style>
+    svg > rect:first-of-type { fill: white !important; }
+    .bg, [class*="-bg"] { fill: transparent !important; }
+    .fabric { stroke: #b06060 !important; stroke-width: 1.5px !important; fill: none !important; }
+    .lining { stroke: #8ca08c !important; stroke-width: 1px !important; fill: rgba(140,160,140,0.08) !important; }
+    .interfacing { stroke: #9e8a85 !important; stroke-width: 0.8px !important; fill: none !important; stroke-dasharray: 4 2 !important; }
+    .contrast { stroke: #b06090 !important; stroke-width: 0.8px !important; fill: none !important; }
+    .mark { stroke: #6080b0 !important; stroke-width: 0.4px !important; fill: none !important; }
+    .various { stroke: #b07060 !important; stroke-width: 0.6px !important; fill: none !important; }
+    .note { stroke: #b06060 !important; stroke-width: 0.6px !important; fill: none !important; }
+    use[href="#logo"], use[xlink\\:href="#logo"], .logo, .scalebox { display: none !important; }
+    text, tspan { display: none !important; }
+    text.text-4xl, text.text-4xl tspan { display: inline !important; fill: #2d2420 !important; }
+    text.text-lg.font-bold, text.text-lg.font-bold tspan { display: inline !important; fill: #2d2420 !important; }
+    text:has(textPath), text:has(textPath) textPath, text:has(textPath) tspan { display: inline !important; fill: #b06060 !important; }
+  </style>`
+  return svg.replace(/(<svg[^>]*>)/, `$1${overrides}`)
+}
+
+// For PDF formats: svg-to-pdfkit does NOT process <style> blocks — it only reads
+// presentation attributes.  Injecting a <style> block causes it to render the raw
+// CSS text as a filled rectangle (the "black box").  Instead we manipulate the SVG
+// string directly at the attribute level.
+function processFreeSewingSvgForPdf(svg) {
+  return svg
+    // Remove FreeSewing logo <use> elements.
+    // FreeSewing emits <use ...></use> (not self-closing), so we must also consume
+    // the trailing </use> — otherwise it becomes an orphaned closing tag that
+    // svg-to-pdfkit's XML parser uses to pop the element stack early, which closes
+    // the surrounding <g> groups and makes all pattern pieces after the first invisible.
+    .replace(/<use\b[^>]*(?:href|xlink:href)\s*=\s*["']#logo["'][^>]*>(?:\s*<\/use>)?/gi, '')
+    // Remove annotation <text> elements (FreeSewing labels, measurements, etc.).
+    // Preserve <text> that wraps a <textPath> — those are fold-line labels.
+    .replace(/<text\b[^>]*>[\s\S]*?<\/text>/g, (m) => (m.includes('<textPath') ? m : ''))
+}
+
 // ─── Export logic ─────────────────────────────────────────────────────────────
 
 async function exportPattern({ design, format, measurements, options }) {
@@ -97,7 +138,12 @@ async function exportPattern({ design, format, measurements, options }) {
   }
 
   pattern.draft()
-  const svg = pattern.render()
+  const rawSvg = pattern.render()
+  // SVG: browser-safe CSS injection.  PDF/tiled: attribute-level manipulation
+  // (svg-to-pdfkit ignores <style> blocks and renders their text as a black box).
+  const svg = format === 'svg'
+    ? processFreeSewingSvg(rawSvg)
+    : processFreeSewingSvgForPdf(rawSvg)
 
   // ── Convert to output buffer ──────────────────────────────────────────────
 
