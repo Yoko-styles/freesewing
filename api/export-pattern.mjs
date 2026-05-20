@@ -23,6 +23,7 @@ import { cisMaleAdult40 } from '@freesewing/models'
 import { PdfMaker } from '../packages/react/components/Editor/lib/export/pdf-maker.mjs'
 import { SinglePdfMaker } from '../packages/react/components/Editor/lib/export/single-pdf-maker.mjs'
 import { tilerPlugin } from '../packages/react/components/Editor/lib/export/plugin-tiler.mjs'
+import { processFreeSewingSvgForPdf } from '../packages/react/components/Editor/lib/export/process-svg-for-pdf.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.join(__dirname, 'dist')
@@ -89,22 +90,7 @@ function processFreeSewingSvg(svg) {
   return svg.replace(/(<svg[^>]*>)/, `$1${overrides}`)
 }
 
-// For PDF formats: svg-to-pdfkit does NOT process <style> blocks — it only reads
-// presentation attributes.  Injecting a <style> block causes it to render the raw
-// CSS text as a filled rectangle (the "black box").  Instead we manipulate the SVG
-// string directly at the attribute level.
-function processFreeSewingSvgForPdf(svg) {
-  return svg
-    // Remove FreeSewing logo <use> elements.
-    // FreeSewing emits <use ...></use> (not self-closing), so we must also consume
-    // the trailing </use> — otherwise it becomes an orphaned closing tag that
-    // svg-to-pdfkit's XML parser uses to pop the element stack early, which closes
-    // the surrounding <g> groups and makes all pattern pieces after the first invisible.
-    .replace(/<use\b[^>]*(?:href|xlink:href)\s*=\s*["']#logo["'][^>]*>(?:\s*<\/use>)?/gi, '')
-    // Remove annotation <text> elements (FreeSewing labels, measurements, etc.).
-    // Preserve <text> that wraps a <textPath> — those are fold-line labels.
-    .replace(/<text\b[^>]*>[\s\S]*?<\/text>/g, (m) => (m.includes('<textPath') ? m : ''))
-}
+// processFreeSewingSvgForPdf is imported from the shared export lib above.
 
 // ─── Export logic ─────────────────────────────────────────────────────────────
 
