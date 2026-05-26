@@ -124,6 +124,18 @@ async function exportPattern({ design, format, measurements, options }) {
   }
 
   pattern.draft()
+
+  // Parts that were never drafted keep bottomRight === false (the Part constructor default).
+  // Calling asRenderProps() on them throws "false.asRenderProps is not a function".
+  // Remove them from their stacks so the renderer skips them entirely.
+  for (const stack of Object.values(pattern.stacks || {})) {
+    for (const part of [...stack.parts]) {
+      if (part.bottomRight === false || part.topLeft === false) {
+        stack.parts.delete(part)
+      }
+    }
+  }
+
   const rawSvg = pattern.render()
   // SVG: browser-safe CSS injection.  PDF/tiled: attribute-level manipulation
   // (svg-to-pdfkit ignores <style> blocks and renders their text as a black box).
