@@ -4,6 +4,7 @@
 import yaml from 'js-yaml'
 import { PdfMaker } from './pdf-maker.mjs'
 import { SinglePdfMaker } from './single-pdf-maker.mjs'
+import { processFreeSewingSvgForPdf } from './process-svg-for-pdf.mjs'
 
 /** when the worker receives data from the page, do the appropriate export */
 addEventListener('message', async (e) => {
@@ -49,7 +50,9 @@ const exportYaml = (settings) => exportBlob(yaml.dump(settings), 'application/x-
 const exportSvg = (svg) => exportBlob(svg, 'image/svg+xml')
 
 const exportPdf = async (data) => {
-  const maker = data.format === 'pdf' ? new SinglePdfMaker(data) : new PdfMaker(data)
+  const isTiled = data.format !== 'pdf'
+  if (isTiled && data.svg) data = { ...data, svg: processFreeSewingSvgForPdf(data.svg) }
+  const maker = isTiled ? new PdfMaker(data) : new SinglePdfMaker(data)
   await maker.makePdf()
   postSuccess(await maker.toBlob())
 }

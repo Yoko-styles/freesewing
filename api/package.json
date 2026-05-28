@@ -7,9 +7,7 @@
     "start": "node draft-api.mjs"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0",
+    "@aws-sdk/client-s3": "^3.1045.0",
     "@freesewing/aaron": "next",
     "@freesewing/albert": "next",
     "@freesewing/bee": "next",
@@ -25,6 +23,7 @@
     "@freesewing/carlton": "next",
     "@freesewing/cathrin": "next",
     "@freesewing/charlie": "next",
+    "@freesewing/config": "next",
     "@freesewing/cornelius": "next",
     "@freesewing/diana": "next",
     "@freesewing/florence": "next",
@@ -42,6 +41,7 @@
     "@freesewing/lumina": "next",
     "@freesewing/lumira": "next",
     "@freesewing/lunetius": "next",
+    "@freesewing/models": "next",
     "@freesewing/noble": "next",
     "@freesewing/octoplushy": "next",
     "@freesewing/onyx": "next",
@@ -49,6 +49,9 @@
     "@freesewing/otis": "next",
     "@freesewing/paco": "next",
     "@freesewing/penelope": "next",
+    "@freesewing/plugin-i18n": "next",
+    "@freesewing/plugin-theme": "next",
+    "@freesewing/plugin-transform": "^4.8.0",
     "@freesewing/sandy": "next",
     "@freesewing/shelly": "next",
     "@freesewing/shin": "next",
@@ -68,9 +71,13 @@
     "@freesewing/walburga": "next",
     "@freesewing/waralee": "next",
     "@freesewing/yuri": "next",
-    "@freesewing/models": "next",
-    "@freesewing/plugin-theme": "next",
-    "@freesewing/plugin-i18n": "next",
-    "@freesewing/config": "next"
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.2",
+    "js-yaml": "^4.1.1",
+    "pdfkit": "^0.18.0",
+    "svg-to-pdfkit": "^0.1.8",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }

@@ -1,6 +1,8 @@
 import express from 'express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import * as dotenv from 'dotenv'
 import { themePlugin } from '@freesewing/plugin-theme'
 import { pluginI18n } from '@freesewing/plugin-i18n'
 import fs from 'fs'
@@ -8,6 +10,17 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+dotenv.config()
+
+const s3Client = new S3Client({
+  region: 'auto',
+  endpoint: process.env.R2_ENDPOINT,
+  credentials: {
+    accessKeyId: process.env.R2_ACCESS_KEY_ID,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+  },
+})
 
 // Load default measurements and per-design measurement keys from local JSON
 const { measurements: defaultMeasurements, designMeasurements } = JSON.parse(
@@ -163,8 +176,14 @@ app.get('/api/designs/:design', (req, res) => {
  *       400:
  *         description: Invalid request or design not found.
  */
-app.post('/api/draft', (req, res) => {
-  const { design = 'aaron', measurements: rawMeasurements, options = {} } = req.body
+app.post('/api/draft', async (req, res) => {
+  const { 
+    design = 'aaron', 
+    measurements: rawMeasurements, 
+    options = {}, 
+    user_id, 
+    sessionId 
+  } = req.body
 
   // Merge provided measurements over defaults, then filter to only what this design needs
   const merged = { ...defaultMeasurements, ...(rawMeasurements || {}) }
@@ -199,50 +218,47 @@ app.post('/api/draft', (req, res) => {
 
     const distDir = path.join(process.cwd(), 'dist')
     if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true })
-    const filename = `${design}-${Date.now()}.svg`
+    
+    // Determine S3 Key and Filename
+    let filename
+    let s3Key
+    if (user_id && sessionId) {
+      filename = `${sessionId}.svg`
+      s3Key = `session-drafts/${user_id}/${sessionId}.svg`
+    } else {
+      filename = `${design}-${Date.now()}.svg`
+      s3Key = `patterns/${filename}`
+    }
+
     const filePath = path.join(distDir, filename)
     fs.writeFileSync(filePath, svg)
 
-    res.json({ message: 'Pattern drafted successfully', file: filename, path: filePath })
+    // Upload to S3/R2 immediately
+    let publicUrl = null
+    try {
+      await s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.R2_BUCKET_NAME,
+          Key: s3Key,
+          Body: svg,
+          ContentType: 'image/svg+xml',
+        })
+      )
+      publicUrl = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${s3Key}`
+    } catch (uploadError) {
+      console.error('Cloud upload failed:', uploadError)
+    }
+
+    res.json({ 
+      message: 'Pattern drafted successfully', 
+      file: filename, 
+      path: filePath,
+      url: publicUrl,
+      key: s3Key
+    })
   } catch (error) {
     console.error('Drafting error:', error)
     res.status(500).json({ error: 'Failed to draft pattern', message: error.message })
-  }
-})
-
-/**
- * @openapi
- * /api/patterns/{filename}:
- *   get:
- *     summary: Retrieve a drafted pattern file
- *     description: Returns the SVG file content for a previously drafted pattern.
- *     parameters:
- *       - in: path
- *         name: filename
- *         required: true
- *         schema:
- *           type: string
- *         description: The filename returned by the /api/draft endpoint.
- *     responses:
- *       200:
- *         description: The SVG file content.
- *         content:
- *           image/svg+xml:
- *             schema:
- *               type: string
- *               format: binary
- *       404:
- *         description: Pattern file not found.
- */
-app.get('/api/patterns/:filename', (req, res) => {
-  const { filename } = req.params
-  const filePath = path.join(process.cwd(), 'dist', filename)
-
-  if (fs.existsSync(filePath)) {
-    res.setHeader('Content-Type', 'image/svg+xml')
-    res.sendFile(filePath)
-  } else {
-    res.status(404).json({ error: 'Pattern file not found' })
   }
 })
 

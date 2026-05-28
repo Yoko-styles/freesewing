@@ -4,8 +4,6 @@ export const logoDefs = [
   {
     name: 'logo',
     def: (scale) =>
-      `<g id="logo" transform="scale(${
-        2 * scale
-      }) translate(-23 -36)"><path class="logo" fill="currentColor" d="${logoPath}"/></g>`,
+      `<g id="logo" transform="scale(${scale}) translate(-21 -22)"><path class="logo" fill="#D07D7A" d="${logoPath}"/></g>`,
   },
 ]
