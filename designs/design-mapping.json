@@ -401,7 +401,13 @@
     "crew-neck-sweater": ["yuri"],
     "knit-top": ["yuri"],
 
-    "pullover": ["hugo", "sven", "yuri"]
+    "pullover": ["hugo", "sven", "yuri"],
+
+    "trunks": ["shin"],
+    "swim-trunk": ["shin"],
+    "workout-top": ["teagan"],
+    "gym-top": ["aaron", "teagan"],
+    "workout-shirt": ["teagan"]
   },
   "designs": {
     "aaron": {
